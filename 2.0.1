@@ -1,0 +1,635 @@
+<?php
+
+/*
+  Plugin Name: GTDB Guitar Tuners
+  Plugin URI: http://wordpress.org/extend/plugins/guitar-tuner/
+  Description: This plugin adds guitar tuners to your pages
+  Author: Ben Taylor
+  Version: 2.0.1
+  Author URI: http://www.gtdb.org/
+
+  Copyright 2011  Ben Taylor
+
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License, version 2, as
+  published by the Free Software Foundation.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
+global $jal_db_version;
+$jal_db_version = "1.0";
+
+function jal_install() {
+    global $wpdb;
+    global $jal_db_version;
+
+    $table_name = $wpdb->prefix . "guitar_tuners";
+    if ($wpdb->get_var("show tables like '$table_name'") != $table_name) {
+
+        $sql = "CREATE TABLE  " . $table_name . " (
+                            `id` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+                            `s6` varchar(4) NOT NULL,
+                            `s5` varchar(4) NOT NULL,
+                            `s4` varchar(4) NOT NULL,
+                            `s3` varchar(4) NOT NULL,
+                            `s2` varchar(4) NOT NULL,
+                            `s1` varchar(4) NOT NULL,
+                            `tuning` varchar(255) NOT NULL
+			  );";
+
+        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+        dbDelta($sql);
+
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '1','s6' => 'D3','s5' => 'D4','s4' => 'D4','s3' => 'D4','s2' => 'D5','s1' => 'D5','tuning' => 'dddddd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '2','s6' => 'A2','s5' => 'A3','s4' => 'A3','s3' => 'G4','s2' => 'G4','s1' => 'G5','tuning' => 'aaaggg',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '3','s6' => 'A2','s5' => 'A3','s4' => 'D4','s3' => 'E4','s2' => 'B4','s1' => 'E5','tuning' => 'aadebe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '4','s6' => 'A2','s5' => 'B3','s4' => 'E4','s3' => 'F4#','s2' => 'A4','s1' => 'D5','tuning' => 'abef#ad',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '5','s6' => 'A3','s5' => 'C4','s4' => 'D4','s3' => 'E4','s2' => 'G4','s1' => 'A4','tuning' => 'acdega',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '6','s6' => '0','s5' => 'A3','s4' => 'D4','s3' => 'G4','s2' => 'B4','s1' => 'E5','tuning' => 'adgbe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '7','s6' => 'A3','s5' => 'E4','s4' => 'A4','s3' => 'C5#','s2' => 'C5#','s1' => 'C5#','tuning' => 'aeac#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '8','s6' => 'A2','s5' => 'E3','s4' => 'A3','s3' => 'D4','s2' => 'G4','s1' => 'C5','tuning' => 'aeadgc',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '9','s6' => 'B2','s5' => 'A3','s4' => 'G4','s3' => 'D4','s2' => 'A4','s1' => 'D5','tuning' => 'bagdad',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '10','s6' => 'B2','s5' => 'B3','s4' => 'D4','s3' => 'G4','s2' => 'B4','s1' => 'E5','tuning' => 'bbdgbe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '11','s6' => 'B2','s5' => 'D3','s4' => 'D4','s3' => 'D4','s2' => 'D5','s1' => 'D5','tuning' => 'bddddd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '12','s6' => 'B2','s5' => 'E3','s4' => 'A3','s3' => 'D4','s2' => 'F4#','s1' => 'B4','tuning' => 'beadf#b',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '13','s6' => 'B2','s5' => 'E3','s4' => 'B3','s3' => 'E4','s2' => 'B4','s1' => 'E5','tuning' => 'bebebe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '14','s6' => 'C3#','s5' => 'A3','s4' => 'C4#','s3' => 'G4#','s2' => 'A4','s1' => 'E5','tuning' => 'c#ac#g#ae',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '15','s6' => 'C3#','s5' => 'F3#','s4' => 'B3','s3' => 'E4','s2' => 'G4#','s1' => 'C5#','tuning' => 'c#f#beg#c#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '16','s6' => 'C3#','s5' => 'G3#','s4' => 'C4#','s3' => 'F4','s2' => 'G4#','s1' => 'C5#','tuning' => 'c#g#c#fg#c#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '17','s6' => 'C3','s5' => 'A3#','s4' => 'C4','s3' => 'F4','s2' => 'A4','s1' => 'F5','tuning' => 'ca#cfa#f',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '18','s6' => 'C3','s5' => 'A3','s4' => 'C4','s3' => 'G4','s2' => 'C5','s1' => 'E5','tuning' => 'cacgce',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '19','s6' => 'C3','s5' => 'A3','s4' => 'D4','s3' => 'G4','s2' => 'B4','s1' => 'E5','tuning' => 'cadgbe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '20','s6' => 'C3','s5' => 'E3','s4' => 'G3#','s3' => 'C4','s2' => 'E4','s1' => 'G4#','tuning' => 'ceg#ceg#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '21','s6' => 'C3','s5' => 'F3#','s4' => 'C4','s3' => 'F4#','s2' => 'C5','s1' => 'F5#','tuning' => 'cf#cf#cf#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '22','s6' => 'C3','s5' => 'F3','s4' => 'A3#','s3' => 'D4#','s2' => 'G4','s1' => 'C5','tuning' => 'cfa#d#gc',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '23','s6' => 'C3','s5' => 'F3','s4' => 'C4','s3' => 'F4','s2' => 'C5','s1' => 'F5','tuning' => 'cfcfcf',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '24','s6' => 'C3','s5' => 'F3','s4' => 'C4','s3' => 'G4','s2' => 'A4#','s1' => 'E5','tuning' => 'cfcga#e',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '25','s6' => 'C3','s5' => 'F3','s4' => 'C4','s3' => 'G4','s2' => 'A4','s1' => 'E5','tuning' => 'cfcgae',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '26','s6' => 'C3','s5' => 'F3','s4' => 'C4','s3' => 'G4','s2' => 'C5','s1' => 'D5','tuning' => 'cfcgcd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '27','s6' => 'C4','s5' => 'C4','s4' => 'C4','s3' => 'G4','s2' => 'C5','s1' => 'E5','tuning' => 'cgce',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '28','s6' => 'C3','s5' => 'G3','s4' => 'C4','s3' => 'E4','s2' => 'G4','s1' => 'C5','tuning' => 'cgcegc',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '29','s6' => 'C3','s5' => 'G3','s4' => 'C4','s3' => 'F4','s2' => 'A4','s1' => 'D5','tuning' => 'cgcfad',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '30','s6' => 'C3','s5' => 'G3','s4' => 'C4','s3' => 'F4','s2' => 'C5','s1' => 'D5','tuning' => 'cgcfcd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '31','s6' => 'C3','s5' => 'G3','s4' => 'C4','s3' => 'F4','s2' => 'C5','s1' => 'E5','tuning' => 'cgcfce',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '32','s6' => 'C3','s5' => 'G3','s4' => 'C4','s3' => 'G4','s2' => 'A4','s1' => 'E5','tuning' => 'cgcgae',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '33','s6' => 'C3','s5' => 'G3','s4' => 'C4','s3' => 'G4','s2' => 'C5','s1' => 'C5','tuning' => 'cgcgcc',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '34','s6' => 'C3','s5' => 'G3','s4' => 'C4','s3' => 'G4','s2' => 'C5','s1' => 'D5','tuning' => 'cgcgcd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '35','s6' => 'C3','s5' => 'G3','s4' => 'C4','s3' => 'G4','s2' => 'C5','s1' => 'E5','tuning' => 'cgcgce',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '36','s6' => 'C3','s5' => 'G3','s4' => 'C4','s3' => 'G4','s2' => 'C5','s1' => 'G5','tuning' => 'cgcgcg',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '37','s6' => 'C3','s5' => 'G3','s4' => 'D4','s3' => 'A4','s2' => 'E5','s1' => 'B5','tuning' => 'cgdaeb',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '38','s6' => 'C3','s5' => 'G3','s4' => 'D4','s3' => 'G4','s2' => 'A4','s1' => 'D5','tuning' => 'cgdgad',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '39','s6' => 'C3','s5' => 'G3','s4' => 'D4','s3' => 'G4','s2' => 'B4','s1' => 'C5','tuning' => 'cgdgbc',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '40','s6' => 'C3','s5' => 'G3','s4' => 'D4','s3' => 'G4','s2' => 'B4','s1' => 'D5','tuning' => 'cgdgbd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '41','s6' => 'C3','s5' => 'G3','s4' => 'D4','s3' => 'G4','s2' => 'B4','s1' => 'E5','tuning' => 'cgdgbe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '42','s6' => 'C3','s5' => 'G3','s4' => 'E4','s3' => 'G4','s2' => 'C5','s1' => 'C5','tuning' => 'cgegcc',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '43','s6' => 'D3','s5' => 'A3','s4' => 'C4','s3' => 'G4','s2' => 'C5','s1' => 'E5','tuning' => 'dacgce',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '44','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'A4','s2' => 'B4','s1' => 'E5','tuning' => 'dadabe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '45','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'D4','s2' => 'A4','s1' => 'D5','tuning' => 'daddad',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '46','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'E4','s2' => 'A4','s1' => 'D5','tuning' => 'dadead',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '47','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'E4','s2' => 'A4','s1' => 'E5','tuning' => 'dadeae',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '48','s6' => 'D4','s5' => 'D4','s4' => 'D4','s3' => 'A4','s2' => 'D5','s1' => 'F5#','tuning' => 'dadf#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '49','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'F4#','s2' => 'A4','s1' => 'D5','tuning' => 'dadf#ad',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '50','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'F4#','s2' => 'B4','s1' => 'E5','tuning' => 'dadf#be',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '51','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'F4','s2' => 'A4','s1' => 'D5','tuning' => 'dadfad',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '52','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'G4','s2' => 'A4#','s1' => 'D5','tuning' => 'dadga#d',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '53','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'G4','s2' => 'A4','s1' => 'D5','tuning' => 'dadgad',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '54','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'G4','s2' => 'B4','s1' => 'D5','tuning' => 'dadgbd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '55','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'G4','s2' => 'B4','s1' => 'E5','tuning' => 'dadgbe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '56','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'G4','s2' => 'D5','s1' => 'F5#','tuning' => 'dadgdf#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '57','s6' => 'D3','s5' => 'A3','s4' => 'E4','s3' => 'A4','s2' => 'E5','s1' => 'E5','tuning' => 'daeaee',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '58','s6' => 'D3','s5' => 'A3','s4' => 'E4','s3' => 'F4','s2' => 'C5','s1' => 'E5','tuning' => 'daefce',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '59','s6' => 'D3','s5' => 'G3','s4' => 'C4','s3' => 'F4','s2' => 'A4','s1' => 'D5','tuning' => 'dgcfad',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '60','s6' => 'D3','s5' => 'G3','s4' => 'D4','s3' => 'F4#','s2' => 'A4','s1' => 'B4','tuning' => 'dgdf#ab',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '61','s6' => 'D3','s5' => 'G3','s4' => 'D4','s3' => 'F4','s2' => 'A4','s1' => 'A4#','tuning' => 'dgdfaa#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '62','s6' => 'D3','s5' => 'G3','s4' => 'D4','s3' => 'F4','s2' => 'C5','s1' => 'D5','tuning' => 'dgdfcd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '63','s6' => 'D3','s5' => 'G3','s4' => 'D4','s3' => 'G4','s2' => 'A4#','s1' => 'D5','tuning' => 'dgdga#d',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '64','s6' => 'D3','s5' => 'G3','s4' => 'D4','s3' => 'G4','s2' => 'A4','s1' => 'D5','tuning' => 'dgdgad',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '65','s6' => 'D3','s5' => 'G3','s4' => 'D4','s3' => 'G4','s2' => 'B4','s1' => 'D5','tuning' => 'dgdgbd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '66','s6' => 'D3','s5' => 'G3','s4' => 'D4','s3' => 'G4','s2' => 'C5','s1' => 'D5','tuning' => 'dgdgcd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '67','s6' => 'E3','s5' => 'A3','s4' => 'C4#','s3' => 'E4','s2' => 'A4','s1' => 'E5','tuning' => 'eac#eae',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '68','s6' => 'E3','s5' => 'A3','s4' => 'C4','s3' => 'G4','s2' => 'B4','s1' => 'E5','tuning' => 'eacgbe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '69','s6' => 'E3','s5' => 'A3','s4' => 'D4','s3' => 'E4','s2' => 'A4','s1' => 'E5','tuning' => 'eadeae',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '70','s6' => 'E3','s5' => 'A3','s4' => 'D4','s3' => 'E4','s2' => 'B4','s1' => 'E5','tuning' => 'eadebe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '71','s6' => 'E3','s5' => 'A3','s4' => 'D4','s3' => 'E4','s2' => 'E4','s1' => 'A5','tuning' => 'eadeea',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '72','s6' => 'E3','s5' => 'A3','s4' => 'D4','s3' => 'F4#','s2' => 'B4','s1' => 'E5','tuning' => 'eadf#be',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '73','s6' => 'E3','s5' => 'A3','s4' => 'D4','s3' => 'G4','s2' => 'A4','s1' => 'E5','tuning' => 'eadgae',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '74','s6' => 'E3','s5' => 'A3','s4' => 'D4','s3' => 'G4','s2' => 'B4','s1' => 'E5','tuning' => 'eadgbe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '75','s6' => 'D3','s5' => 'G3','s4' => 'C4','s3' => 'F4','s2' => 'A4','s1' => 'D5','tuning' => 'eadgbe_full_down',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '76','s6' => 'D3#','s5' => 'G3#','s4' => 'C4#','s3' => 'F4#','s2' => 'A4#','s1' => 'D5#','tuning' => 'eadgbe_half_down',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '77','s6' => 'E3','s5' => 'A3','s4' => 'D4','s3' => 'G4','s2' => 'C5','s1' => 'F5','tuning' => 'eadgcf',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '78','s6' => 'E3','s5' => 'A3','s4' => 'E4','s3' => 'A4','s2' => 'C5#','s1' => 'E5','tuning' => 'eaeac#e',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '79','s6' => 'D3#','s5' => 'G3#','s4' => 'C4#','s3' => 'F4#','s2' => 'A4#','s1' => 'E5','tuning' => 'ebabdbgbbbe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '80','s6' => 'E3','s5' => 'B3','s4' => 'E4','s3' => 'G4#','s2' => 'G4#','s1' => 'G4#','tuning' => 'ebeg#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '81','s6' => 'E3','s5' => 'B3','s4' => 'E4','s3' => 'G4#','s2' => 'B4','s1' => 'E5','tuning' => 'ebeg#be',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '82','s6' => 'E3','s5' => 'B3','s4' => 'E4','s3' => 'G4','s2' => 'B4','s1' => 'E5','tuning' => 'ebegbe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '83','s6' => 'E3','s5' => 'B3','s4' => 'G4','s3' => 'D4','s2' => 'A4','s1' => 'D5','tuning' => 'ebgdad',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '84','s6' => 'E3','s5' => 'B3','s4' => 'G4','s3' => 'D4','s2' => 'A4','s1' => 'E5','tuning' => 'ebgdae',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '85','s6' => 'E3','s5' => 'C4','s4' => 'D4','s3' => 'F4','s2' => 'A4','s1' => 'D5','tuning' => 'ecdfad',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '86','s6' => 'F3#','s5' => 'A3#','s4' => 'C4#','s3' => 'F4#','s2' => 'A4#','s1' => 'F5#','tuning' => 'f#a#c#f#a#f#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '87','s6' => 'F3','s5' => 'A3#','s4' => 'D4#','s3' => 'G4#','s2' => 'C5','s1' => 'F5','tuning' => 'fa#d#g#cf',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '88','s6' => 'F3','s5' => 'A3','s4' => 'C4','s3' => 'G4','s2' => 'C5','s1' => 'E5','tuning' => 'facgce',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '89','s6' => 'F3','s5' => 'A3','s4' => 'G4','s3' => 'F4','s2' => 'A4','s1' => 'G5','tuning' => 'fagfag',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '90','s6' => 'F3','s5' => 'C4','s4' => 'F4','s3' => 'G4#','s2' => 'C4','s1' => 'F5#','tuning' => 'fcfg#cf',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '91','s6' => 'G3','s5' => 'B3','s4' => 'D4','s3' => 'G4','s2' => 'B4','s1' => 'D5','tuning' => 'gbdgbd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '92','s6' => 'G4','s5' => 'C4','s4' => 'E4','s3' => 'A4','s2' => '0','s1' => '0','tuning' => 'gcea',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '93','s6' => 'G3','s5' => 'D4','s4' => 'G4','s3' => 'B4','s2' => 'B4','s1' => 'B4','tuning' => 'gdgb',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '94','s6' => 'G3','s5' => 'G3','s4' => 'D4','s3' => '0','s2' => '0','s1' => '0','tuning' => 'ggdxxx',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '95','s6' => 'G3','s5' => 'G3','s4' => 'G4','s3' => 'A4','s2' => 'A4','s1' => 'A5','tuning' => 'gggaaa',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '96','s6' => 'C3','s5' => 'G3','s4' => 'C4','s3' => 'E4','s2' => 'A4','s1' => 'E5','tuning' => 'xgceae',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '97','s6' => 'E3','s5' => 'B3','s4' => 'E4','s3' => 'E4','s2' => 'B4','s1' => 'E5','tuning' => 'ebeebe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '98','s6' => 'G3','s5' => 'D4','s4' => 'A4','s3' => 'E5','s2' => '0','s1' => '0','tuning' => 'gdae',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '99','s6' => 'D3','s5' => 'A3','s4' => 'F4','s3' => 'C5','s2' => 'G4','s1' => 'D5','tuning' => 'dafcgd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '100','s6' => 'E3','s5' => 'A3','s4' => 'B3','s3' => 'G4','s2' => 'B4','s1' => 'E5','tuning' => 'eabgbe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '101','s6' => 'A2','s5' => 'A3','s4' => 'D4','s3' => 'G4','s2' => 'B4','s1' => 'E5','tuning' => 'aadgbe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '102','s6' => 'B3','s5' => 'A3','s4' => 'D4','s3' => 'G4','s2' => 'B4','s1' => 'E5','tuning' => 'badgbe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '103','s6' => 'E3','s5' => 'B3','s4' => 'D4','s3' => 'G4','s2' => 'A4','s1' => 'D5','tuning' => 'ebdgad',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '104','s6' => 'A2','s5' => 'D3','s4' => 'G3','s3' => 'C4','s2' => 'E4','s1' => 'A4','tuning' => 'adgcea',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '105','s6' => 'A3','s5' => 'B3','s4' => 'D4','s3' => 'B4','s2' => 'E5','s1' => 'G5','tuning' => 'abdbeg',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '106','s6' => 'C3','s5' => 'F3','s4' => 'C4','s3' => 'D4','s2' => 'E4','s1' => 'A4','tuning' => 'cfcdea',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '107','s6' => 'C3','s5' => 'G3','s4' => 'C4','s3' => 'G4','s2' => 'B4','s1' => 'E5','tuning' => 'cgcgbe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '108','s6' => 'B2','s5' => 'F3#','s4' => 'B3','s3' => 'E4','s2' => 'G4#','s1' => 'C5#','tuning' => 'bf#beg#c#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '109','s6' => 'B2','s5' => 'G3','s4' => 'D4','s3' => 'G4','s2' => 'A4','s1' => 'D5','tuning' => 'bgdgad',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '110','s6' => 'C3','s5' => 'G3','s4' => 'C4','s3' => 'G4','s2' => 'A4','s1' => 'D5','tuning' => 'cgcgad',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '111','s6' => 'E3','s5' => 'E3','s4' => 'B3','s3' => 'B4','s2' => 'B4','s1' => 'B4','tuning' => 'eebbbb',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '112','s6' => 'B2','s5' => 'F3#','s4' => 'D4','s3' => 'F4#','s2' => 'A4','s1' => 'C5#','tuning' => 'bf#df#ac#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '113','s6' => 'A2#','s5' => 'F3','s4' => 'C4','s3' => 'F4','s2' => 'G4','s1' => 'C5','tuning' => 'a#fcfgc',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '114','s6' => 'E3','s5' => 'A3','s4' => 'D4','s3' => 'A4','s2' => 'D5','s1' => 'E5','tuning' => 'eadade',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '115','s6' => 'A2#','s5' => 'F3','s4' => 'C4','s3' => 'F4','s2' => 'A4#','s1' => 'D5','tuning' => 'a#fcfa#d',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '116','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'G4','s2' => 'B4','s1' => 'F5','tuning' => 'dadgbf',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '117','s6' => 'D3#','s5' => 'G3#','s4' => 'C4#','s3' => 'F4#','s2' => 'A4#','s1' => 'D5#','tuning' => 'd#g#c#f#a#d#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '118','s6' => 'B3','s5' => 'E4','s4' => 'G4','s3' => 'C4','s2' => 'A4#','s1' => 'E5','tuning' => 'begca#e',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '119','s6' => 'F3','s5' => 'G3#','s4' => 'C4','s3' => 'C4#','s2' => 'A4#','s1' => 'F5','tuning' => 'fg#cc#a#f',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '120','s6' => 'D3','s5' => 'A3','s4' => 'A3','s3' => 'E4','s2' => 'A4','s1' => 'E5','tuning' => 'daaeae',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '121','s6' => 'D3','s5' => 'G3','s4' => 'D4','s3' => 'G4','s2' => 'A4#','s1' => 'E5','tuning' => 'dgdga#e',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '122','s6' => 'A2','s5' => 'G3','s4' => 'C4','s3' => 'F4','s2' => 'A4','s1' => 'D5','tuning' => 'agcfad',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '123','s6' => 'A2','s5' => 'E3','s4' => 'A3','s3' => 'E4','s2' => 'A4','s1' => 'E5','tuning' => 'aeaeae',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '124','s6' => 'D3','s5' => 'G3','s4' => 'C4','s3' => 'F4','s2' => 'C5','s1' => 'C5','tuning' => 'dgcfcc',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '125','s6' => 'B2','s5' => 'B3','s4' => 'D4','s3' => 'F4#','s2' => 'B4','s1' => 'D5','tuning' => 'bbdf#bd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '126','s6' => 'E3','s5' => 'B3','s4' => 'E4','s3' => 'G4#','s2' => 'A4#','s1' => 'E5','tuning' => 'ebeg#a#e',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '127','s6' => 'C3#','s5' => 'G3#','s4' => 'C4#','s3' => 'F4#','s2' => 'A4#','s1' => 'C5#','tuning' => 'c#g#c#f#a#c#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '128','s6' => 'C3','s5' => 'G3','s4' => 'C4','s3' => 'G4','s2' => 'G4','s1' => 'C5','tuning' => 'cgcggc',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '129','s6' => 'C3','s5' => 'F3','s4' => 'C4','s3' => 'G4','s2' => 'A4','s1' => 'C5','tuning' => 'cfcgac',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '130','s6' => 'C3','s5' => 'C4','s4' => 'D4','s3' => 'G4','s2' => 'A4','s1' => 'D5','tuning' => 'ccdgad',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '131','s6' => 'C3','s5' => 'G3','s4' => 'D4','s3' => 'D4','s2' => 'A4','s1' => 'E5','tuning' => 'cgddae',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '132','s6' => 'B2','s5' => 'E3','s4' => 'A3','s3' => 'D4','s2' => 'G4','s1' => 'C5','tuning' => 'beadgc',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '133','s6' => 'A2','s5' => 'E3','s4' => 'A3','s3' => 'D4','s2' => 'E4','s1' => 'A4','tuning' => 'aeadea',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '134','s6' => 'B2','s5' => 'F3#','s4' => 'C4#','s3' => 'F4#','s2' => 'A4#','s1' => 'D5#','tuning' => 'bf#c#f#a#d#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '135','s6' => 'C3','s5' => 'G3','s4' => 'C4','s3' => 'G4','s2' => 'G4','s1' => 'D5','tuning' => 'cgcggd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '136','s6' => 'C3','s5' => 'G3','s4' => 'C4','s3' => 'G4','s2' => 'G4','s1' => 'E5','tuning' => 'cgcgge',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '137','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'A4','s2' => 'B4','s1' => 'C5','tuning' => 'dadabc',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '138','s6' => 'C3','s5' => 'G3','s4' => 'D4','s3' => 'A4','s2' => 'E5','s1' => 'G5','tuning' => 'cgdaeg',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '139','s6' => 'G3','s5' => 'G3','s4' => 'D4','s3' => 'G4','s2' => 'B4','s1' => 'D5','tuning' => 'ggdgbd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '140','s6' => 'C3#','s5' => 'A3','s4' => 'C4#','s3' => 'E4','s2' => 'B4','s1' => 'E5','tuning' => 'c#ac#ebe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '141','s6' => 'D3','s5' => 'G3','s4' => 'D4','s3' => 'F4#','s2' => 'A4','s1' => 'D5','tuning' => 'dgdf#ad',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '142','s6' => 'B2','s5' => 'A3','s4' => 'B3','s3' => 'G4#','s2' => 'B4','s1' => 'E5','tuning' => 'babg#be',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '143','s6' => 'B2','s5' => 'G3#','s4' => 'B3','s3' => 'G4#','s2' => 'B4','s1' => 'E5','tuning' => 'bg#bg#be',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '144','s6' => 'D3','s5' => 'G3','s4' => 'C4','s3' => 'G4','s2' => 'C5','s1' => 'D5','tuning' => 'dgcgcd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '145','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'A4','s2' => 'C5#','s1' => 'E5','tuning' => 'dadac#e',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '146','s6' => 'B3','s5' => 'F3#','s4' => 'B3','s3' => 'G4','s2' => 'B4','s1' => 'E5','tuning' => 'bf#bgbe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '147','s6' => 'C3','s5' => 'G3','s4' => 'C4','s3' => 'G4','s2' => 'C5','s1' => 'D5#','tuning' => 'cgcgcd#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '148','s6' => 'D3#','s5' => 'G3#','s4' => 'C4#','s3' => 'F4#','s2' => 'A4#','s1' => 'C5#','tuning' => 'd#g#c#f#a#c#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '149','s6' => 'A2','s5' => 'E3','s4' => 'B3','s3' => 'F4#','s2' => 'B4','s1' => 'E5','tuning' => 'aebf#be',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '150','s6' => 'C3','s5' => 'A3','s4' => 'D4','s3' => 'F4#','s2' => 'G4','s1' => 'D5','tuning' => 'cadf#gd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '151','s6' => 'C3#','s5' => 'A3','s4' => 'D4','s3' => 'G4','s2' => 'B4','s1' => 'E5','tuning' => 'c#adgbe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '152','s6' => 'C3#','s5' => 'A3','s4' => 'C4#','s3' => 'A4','s2' => 'B4','s1' => 'C5#','tuning' => 'c#ac#abc#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '153','s6' => 'C3','s5' => 'G3','s4' => 'C4','s3' => 'F4','s2' => 'B4','s1' => 'E5','tuning' => 'cgcfbe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '154','s6' => 'A2#','s5' => 'F3','s4' => 'A3#','s3' => 'D4#','s2' => 'G4','s1' => 'C5','tuning' => 'a#fa#d#gc',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '155','s6' => 'C3','s5' => 'G3','s4' => 'C4','s3' => 'F4','s2' => 'A4','s1' => 'C5','tuning' => 'cgcfac',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '156','s6' => 'E3','s5' => 'C4','s4' => 'G4','s3' => 'C4','s2' => 'A4','s1' => 'E5','tuning' => 'ecgcae',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '157','s6' => 'A2','s5' => 'B3','s4' => 'C4','s3' => 'D4','s2' => 'E5','s1' => 'F5','tuning' => 'abcdef',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '158','s6' => 'C3#','s5' => 'G3#','s4' => 'E4','s3' => 'F4#','s2' => 'B4','s1' => 'D5#','tuning' => 'c#g#ef#bd#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '159','s6' => 'D3','s5' => 'G3','s4' => 'D4','s3' => 'G4','s2' => 'G4','s1' => 'D5','tuning' => 'dgdggd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '160','s6' => 'D3','s5' => 'G3','s4' => 'D4','s3' => 'A4','s2' => 'G4','s1' => 'D5','tuning' => 'dgdagd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '161','s6' => 'D3','s5' => 'A3','s4' => 'C4#','s3' => 'E4','s2' => 'B4','s1' => 'E5','tuning' => 'dac#ebe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '162','s6' => 'B2','s5' => 'F3#','s4' => 'B3','s3' => 'F4#','s2' => 'B4','s1' => 'E5','tuning' => 'bf#bf#be',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '163','s6' => 'C3#','s5' => 'D3#','s4' => 'F4#','s3' => 'G4#','s2' => 'F5','s1' => 'G5#','tuning' => 'c#d#f#g#fg#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '164','s6' => 'A2#','s5' => 'F3','s4' => 'C4','s3' => 'G4','s2' => 'G4','s1' => 'C5','tuning' => 'a#fcggc',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '165','s6' => 'E3','s5' => 'G3#','s4' => 'C4','s3' => 'E4','s2' => 'G4#','s1' => 'C5','tuning' => 'eg#ceg#c',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '166','s6' => 'G3#','s5' => 'C4','s4' => 'E4','s3' => 'G4#','s2' => 'C5','s1' => 'E5','tuning' => 'g#ceg#ce',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '167','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'A4','s2' => 'A4','s1' => 'D5','tuning' => 'dadaad',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '168','s6' => 'F3','s5' => 'A3','s4' => 'C4','s3' => 'E4','s2' => 'G4','s1' => 'B4','tuning' => 'facegb',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '169','s6' => 'D3','s5' => 'G3','s4' => 'D4','s3' => 'G4','s2' => 'B4','s1' => 'E5','tuning' => 'dgdgbe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '170','s6' => 'B2','s5' => 'A3','s4' => 'G3','s3' => 'C4#','s2' => 'G4','s1' => 'E5','tuning' => 'bagc#ge',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '171','s6' => 'F3#','s5' => 'A3#','s4' => 'D4','s3' => 'F4#','s2' => 'A4#','s1' => 'D5','tuning' => 'f#a#df#a#d',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '172','s6' => 'D3','s5' => 'A3','s4' => 'E4','s3' => 'F4#','s2' => 'A4','s1' => 'E5','tuning' => 'daef#ae',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '173','s6' => 'E3','s5' => 'G3#','s4' => 'B3','s3' => 'E4','s2' => 'G4#','s1' => 'E5','tuning' => 'eg#beg#e',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '174','s6' => 'G3','s5' => 'C4','s4' => 'F4','s3' => 'B4','s2' => 'D5','s1' => 'G5','tuning' => 'gcfbdg',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '175','s6' => 'D3#','s5' => 'B3','s4' => 'F4#','s3' => 'C4#','s2' => 'D5#','s1' => 'C5#','tuning' => 'd#bf#c#d#c#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '176','s6' => 'A3','s5' => 'C4','s4' => 'D4#','s3' => 'F4#','s2' => 'A4','s1' => 'C5','tuning' => 'acd#f#ac',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '177','s6' => 'G3#','s5' => 'B3','s4' => 'D4','s3' => 'F4','s2' => 'G4#','s1' => 'B4','tuning' => 'g#bdfg#b',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '178','s6' => 'D3','s5' => 'A3','s4' => 'E4','s3' => 'A4','s2' => 'C5#','s1' => 'D5','tuning' => 'daeac#d',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '179','s6' => 'B2','s5' => 'F3#','s4' => 'B3','s3' => 'F4#','s2' => 'B4','s1' => 'D5#','tuning' => 'bf#bf#bd#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '180','s6' => 'C3','s5' => 'C4','s4' => 'G4','s3' => 'C5','s2' => 'E5','s1' => 'G5','tuning' => 'ccgceg',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '181','s6' => 'D3','s5' => 'A3','s4' => 'E4','s3' => 'A4','s2' => 'C5#','s1' => 'E5','tuning' => 'daeac#e',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '182','s6' => 'D3#','s5' => 'G3','s4' => 'A3#','s3' => 'D4#','s2' => 'F5','s1' => 'A4','tuning' => 'd#ga#d#fa',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '183','s6' => 'B2','s5' => 'F3#','s4' => 'B3','s3' => 'F4#','s2' => 'A4#','s1' => 'D5#','tuning' => 'bf#bf#a#d#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '184','s6' => 'B3','s5' => 'D4','s4' => 'G4','s3' => 'D5','s2' => 'G4#','s1' => 'B5','tuning' => 'bdgdg#b',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '185','s6' => 'E3','s5' => 'B3','s4' => 'F4#','s3' => 'D4','s2' => 'A4','s1' => 'D5','tuning' => 'ebf#dad',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '186','s6' => 'G3','s5' => 'D4','s4' => 'G4','s3' => 'G4','s2' => 'D5','s1' => 'G5','tuning' => 'gdggdg',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '187','s6' => 'E3','s5' => 'G3#','s4' => 'D4','s3' => 'G4#','s2' => 'B4','s1' => 'E5','tuning' => 'eg#dg#be',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '188','s6' => 'C3#','s5' => 'G3#','s4' => 'C4#','s3' => 'F4#','s2' => 'A4#','s1' => 'D5#','tuning' => 'c#g#c#f#a#d#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '189','s6' => 'A2','s5' => 'E3','s4' => 'A3','s3' => 'E4','s2' => 'G4#','s1' => 'C5#','tuning' => 'aeaeg#c#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '190','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'A4','s2' => 'C5#','s1' => 'F5#','tuning' => 'dadac#f#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '191','s6' => 'A2#','s5' => 'D3#','s4' => 'G3#','s3' => 'C4#','s2' => 'F4','s1' => 'A4#','tuning' => 'a#d#g#c#fa#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '192','s6' => 'A3','s5' => 'C4','s4' => 'E4','s3' => 'G4','s2' => 'B4','s1' => 'D5','tuning' => 'acegbd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '193','s6' => 'C3','s5' => 'A3','s4' => 'C4','s3' => 'G4','s2' => 'B4','s1' => 'C5','tuning' => 'cacgbc',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '194','s6' => 'G3#','s5' => 'D4#','s4' => 'G3#','s3' => 'C4#','s2' => 'F4#','s1' => 'A4#','tuning' => 'g#d#g#c#f#a#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '195','s6' => 'E3','s5' => 'C4','s4' => 'D4','s3' => 'G4','s2' => 'A4','s1' => 'D5','tuning' => 'ecdgad',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '196','s6' => 'C3','s5' => 'G3','s4' => 'B3','s3' => 'E4','s2' => 'A4','s1' => 'D5','tuning' => 'cgbead',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '197','s6' => 'A2','s5' => 'A3','s4' => 'A3','s3' => 'G4','s2' => 'B4','s1' => 'E5','tuning' => 'aaagbe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '198','s6' => 'C3','s5' => 'G3','s4' => 'C4','s3' => 'F4','s2' => 'G4','s1' => 'C5','tuning' => 'cgcfgc',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '199','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'F4#','s2' => 'G4','s1' => 'C5','tuning' => 'dadf#gc',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '200','s6' => 'F3','s5' => 'A3#','s4' => 'D4#','s3' => 'G4#','s2' => 'C5#','s1' => 'F5#','tuning' => 'fa#d#g#c#f#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '201','s6' => 'D3','s5' => 'G3','s4' => 'C4','s3' => 'F4','s2' => 'A4#','s1' => 'D5#','tuning' => 'dgcfa#d#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '202','s6' => 'D3','s5' => 'A3','s4' => 'E4','s3' => 'E4','s2' => 'A4','s1' => 'A4','tuning' => 'daeeaa',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '203','s6' => 'C3#','s5' => 'G3#','s4' => 'C4#','s3' => 'G4#','s2' => 'C5#','s1' => 'D5#','tuning' => 'c#g#c#g#c#d#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '204','s6' => 'C3','s5' => 'F3','s4' => 'C4','s3' => 'F4','s2' => 'A4','s1' => 'C5','tuning' => 'cfcfac',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '205','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'G4','s2' => 'A4','s1' => 'E5','tuning' => 'dadgae',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '206','s6' => 'B2','s5' => 'F3#','s4' => 'B3','s3' => 'F4#','s2' => 'B4','s1' => 'C5#','tuning' => 'bf#bf#bc#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '207','s6' => 'C3','s5' => 'G3','s4' => 'C4','s3' => 'D4','s2' => 'E5','s1' => 'G5','tuning' => 'cgcdeg',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '208','s6' => 'F3#','s5' => 'A3#','s4' => 'C4#','s3' => 'F4','s2' => 'A4#','s1' => 'E5','tuning' => 'f#a#c#fa#e',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '209','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'E4','s2' => 'G4#','s1' => 'A4','tuning' => 'dadeg#a',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '210','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'G4','s2' => 'C5','s1' => 'F5','tuning' => 'dadgcf',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '211','s6' => 'A2','s5' => 'D3','s4' => 'A3','s3' => 'D4','s2' => 'F4#','s1' => 'A4','tuning' => 'adadf#a',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '212','s6' => 'D3','s5' => 'A3','s4' => 'B3','s3' => 'C4#','s2' => 'A4','s1' => 'C5#','tuning' => 'dabc#ac#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '213','s6' => 'B2','s5' => 'A3','s4' => 'D4','s3' => 'F4#','s2' => 'A4','s1' => 'D5','tuning' => 'badf#ad',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '214','s6' => 'F3#','s5' => 'F3#','s4' => 'C4#','s3' => 'F4#','s2' => 'A4#','s1' => 'C5#','tuning' => 'f#f#c#f#a#c#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '215','s6' => 'A2','s5' => 'B3','s4' => 'C4','s3' => 'B4','s2' => 'D5','s1' => 'B4','tuning' => 'abcbdb',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '216','s6' => 'A2','s5' => 'A3','s4' => 'E4','s3' => 'A4','s2' => 'C5#','s1' => 'E5','tuning' => 'aaeac#e',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '217','s6' => 'C3','s5' => 'G3','s4' => 'A3#','s3' => 'G4','s2' => 'F5','s1' => 'G5','tuning' => 'cga#gfg',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '218','s6' => 'D3','s5' => 'G3#','s4' => 'C4','s3' => 'G4','s2' => 'G4','s1' => 'D5','tuning' => 'dg#cggd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '219','s6' => 'A2#','s5' => 'G3','s4' => 'C4','s3' => 'E4','s2' => 'F4','s1' => 'C5','tuning' => 'a#gcefc',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '220','s6' => 'E3','s5' => 'G3','s4' => 'D4','s3' => 'D4','s2' => 'B4','s1' => 'D5','tuning' => 'egddbd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '221','s6' => 'A2#','s5' => 'D3#','s4' => 'C4#','s3' => 'C4','s2' => 'F5','s1' => 'A4','tuning' => 'a#d#c#cfa',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '222','s6' => 'C3#','s5' => 'G3#','s4' => 'C4#','s3' => 'G4#','s2' => 'C5#','s1' => 'C5#','tuning' => 'c#g#c#g#c#c#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '223','s6' => 'D3','s5' => 'F3','s4' => 'C4','s3' => 'F4','s2' => 'A4','s1' => 'C5','tuning' => 'dfcfac',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '224','s6' => 'F3','s5' => 'G3','s4' => 'D4','s3' => 'F4','s2' => 'A4','s1' => 'D5','tuning' => 'fgdfad',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '225','s6' => 'B2','s5' => 'F3#','s4' => 'D4','s3' => 'F4#','s2' => 'C5#','s1' => 'F5#','tuning' => 'bf#df#c#f#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '226','s6' => 'C3#','s5' => 'G3#','s4' => 'D4#','s3' => 'G4#','s2' => 'C5','s1' => 'D5#','tuning' => 'c#g#d#g#cd#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '227','s6' => 'D3','s5' => 'G3','s4' => 'D4','s3' => 'D4','s2' => 'B4','s1' => 'E5','tuning' => 'dgddbe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '228','s6' => 'B2','s5' => 'F3#','s4' => 'B3','s3' => 'F4#','s2' => 'B4','s1' => 'D5','tuning' => 'bf#bf#bd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '229','s6' => 'C3','s5' => 'G3','s4' => 'A3#','s3' => 'G4','s2' => 'F4','s1' => 'C5','tuning' => 'cga#gfc',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '230','s6' => 'C3','s5' => 'F3','s4' => 'C4','s3' => 'F4','s2' => 'A4','s1' => 'F5','tuning' => 'cfcfaf',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '231','s6' => 'D3#','s5' => 'G3','s4' => 'A3#','s3' => 'F4','s2' => 'G4','s1' => 'A4#','tuning' => 'd#ga#fga#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '232','s6' => 'C3','s5' => 'G3','s4' => 'D4','s3' => 'A4','s2' => 'A4','s1' => 'D5','tuning' => 'cgdaad',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '233','s6' => 'C3','s5' => 'G3','s4' => 'C4','s3' => 'G4','s2' => 'A4','s1' => 'C5','tuning' => 'cgcgac',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '234','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'F4#','s2' => 'B4','s1' => 'D5','tuning' => 'dadf#bd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '235','s6' => 'D3','s5' => 'A3','s4' => 'A3','s3' => 'E4','s2' => 'A4#','s1' => 'E5','tuning' => 'daaea#e',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '236','s6' => 'C3','s5' => 'G3','s4' => 'C4','s3' => 'E4','s2' => 'A4','s1' => 'D5','tuning' => 'cgcead',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '237','s6' => 'C3','s5' => 'G3','s4' => 'A3','s3' => 'D4','s2' => 'G4','s1' => 'C5','tuning' => 'cgadgc',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '238','s6' => 'E3','s5' => 'B3','s4' => 'D4','s3' => 'G4#','s2' => 'C5#','s1' => 'E5','tuning' => 'ebdg#c#e',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '239','s6' => 'G3','s5' => 'G3','s4' => 'D4','s3' => 'D4','s2' => 'G4','s1' => 'G5','tuning' => 'ggddgg',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '240','s6' => 'C3','s5' => 'A3','s4' => 'C4','s3' => 'G4','s2' => 'G4','s1' => 'E5','tuning' => 'cacgge',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '241','s6' => 'B3','s5' => 'F3#','s4' => 'B3','s3' => 'D4#','s2' => 'F4#','s1' => 'A4#','tuning' => 'bf#bd#f#a#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '242','s6' => 'E3','s5' => 'B3','s4' => 'E4','s3' => 'G4#','s2' => 'B4','s1' => 'D5','tuning' => 'ebeg#bd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '243','s6' => 'C3#','s5' => 'G3#','s4' => 'D4#','s3' => 'F4','s2' => 'G4#','s1' => 'C5#','tuning' => 'c#g#d#fg#c#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '244','s6' => 'C3','s5' => 'A3','s4' => 'C4','s3' => 'G4','s2' => 'B4','s1' => 'D5','tuning' => 'cacgbd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '245','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'D4','s2' => 'B4','s1' => 'E5','tuning' => 'daddbe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '246','s6' => 'D3','s5' => 'D4','s4' => 'D4','s3' => 'A4','s2' => 'D5','s1' => 'D5','tuning' => 'dddadd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '247','s6' => 'E3','s5' => 'B3','s4' => 'F4#','s3' => 'G4#','s2' => 'B4','s1' => 'E5','tuning' => 'ebf#g#be',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '248','s6' => 'D3','s5' => 'D4','s4' => 'A3','s3' => 'A4','s2' => 'D5','s1' => 'D5','tuning' => 'ddaadd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '249','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'A4','s2' => 'D5','s1' => 'D5','tuning' => 'dadadd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '250','s6' => 'F3','s5' => 'A3','s4' => 'G3','s3' => 'A4','s2' => 'B4','s1' => 'D5#','tuning' => 'fagabd#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '251','s6' => 'E3','s5' => 'B3','s4' => 'B3','s3' => 'E4','s2' => 'B4','s1' => 'E5','tuning' => 'ebbebe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '252','s6' => 'D3','s5' => 'A3','s4' => 'E4','s3' => 'B4','s2' => 'F4#','s1' => 'C5#','tuning' => 'daebf#c#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '253','s6' => 'A2','s5' => 'E3','s4' => 'B3','s3' => 'F4#','s2' => 'C5#','s1' => 'D5','tuning' => 'aebf#c#d',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '254','s6' => 'D3','s5' => 'A3','s4' => 'E4','s3' => 'A4','s2' => 'B4','s1' => 'F5#','tuning' => 'daeabf#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '255','s6' => 'E3','s5' => 'B3','s4' => 'D4','s3' => 'G4','s2' => 'B4','s1' => 'D5','tuning' => 'ebdgbd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '256','s6' => 'D3','s5' => 'A3','s4' => 'E4','s3' => 'A4','s2' => 'A4','s1' => 'E5','tuning' => 'daeaae',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '257','s6' => 'F3','s5' => 'C4','s4' => 'F4','s3' => 'C5','s2' => 'F5','s1' => 'F5','tuning' => 'fcfcff',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '258','s6' => 'C3','s5' => 'G3','s4' => 'C4','s3' => 'G4','s2' => 'B4','s1' => 'D5','tuning' => 'cgcgbd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '259','s6' => 'A3','s5' => 'C4','s4' => 'D4','s3' => 'F4#','s2' => 'A4','s1' => 'D5','tuning' => 'acdf#ad',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '260','s6' => 'B3','s5' => 'D4','s4' => 'E4','s3' => 'G4#','s2' => 'B4','s1' => 'E5','tuning' => 'bdeg#be',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '261','s6' => 'C3','s5' => 'A3','s4' => 'D4','s3' => 'A4','s2' => 'D5#','s1' => 'E5','tuning' => 'cadad#e',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '262','s6' => 'E3','s5' => 'G3#','s4' => 'B3','s3' => 'F4#','s2' => 'B4','s1' => 'D5#','tuning' => 'eg#bf#bd#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '263','s6' => 'D3','s5' => 'B3','s4' => 'D4','s3' => 'G4','s2' => 'B4','s1' => 'E5','tuning' => 'dbdgbe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '264','s6' => 'G3','s5' => 'C4','s4' => 'E4','s3' => 'G4','s2' => 'B4','s1' => 'E5','tuning' => 'gcegbe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '265','s6' => 'D3','s5' => 'G3','s4' => 'D4','s3' => 'D4','s2' => 'A4','s1' => 'D5','tuning' => 'dgddad',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '266','s6' => 'A2#','s5' => 'D3#','s4' => 'A3#','s3' => 'D4#','s2' => 'F4','s1' => 'A4#','tuning' => 'a#d#a#d#fa#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '267','s6' => 'D3','s5' => 'G3','s4' => 'D4','s3' => 'E4','s2' => 'B4','s1' => 'D5','tuning' => 'dgdebd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '268','s6' => 'G3#','s5' => 'A3#','s4' => 'A3#','s3' => 'F4','s2' => 'A4#','s1' => 'D5#','tuning' => 'g#a#a#fa#d#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '269','s6' => 'C3#','s5' => 'G3#','s4' => 'C4#','s3' => 'G4#','s2' => 'A4#','s1' => 'C5#','tuning' => 'c#g#c#g#a#c#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '270','s6' => 'A2#','s5' => 'F3','s4' => 'A3#','s3' => 'F4','s2' => 'A4#','s1' => 'D5','tuning' => 'a#fa#fa#d',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '271','s6' => 'D3','s5' => 'A3','s4' => 'E4','s3' => 'F4#','s2' => 'B4','s1' => 'E5','tuning' => 'daef#be',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '272','s6' => 'G3#','s5' => 'C4','s4' => 'D4#','s3' => 'A4#','s2' => 'D5#','s1' => 'G5','tuning' => 'g#cd#a#d#g',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '273','s6' => 'D3','s5' => 'A3','s4' => 'B3','s3' => 'F4#','s2' => 'B4','s1' => 'E5','tuning' => 'dabf#be',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '274','s6' => 'C3','s5' => 'E3','s4' => 'G3','s3' => 'A4','s2' => 'C5','s1' => 'E5','tuning' => 'cegace',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '275','s6' => 'E3','s5' => 'A3','s4' => 'D4','s3' => 'G4','s2' => 'B4','s1' => 'D5#','tuning' => 'eadgbd#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '276','s6' => 'F3','s5' => 'A3','s4' => 'C4','s3' => 'F4','s2' => 'A4','s1' => 'C5','tuning' => 'facfac',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '277','s6' => 'C3','s5' => 'G3','s4' => 'D4','s3' => 'F4','s2' => 'B4','s1' => 'E5','tuning' => 'cgdfbe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '278','s6' => 'C3','s5' => 'G3','s4' => 'D4','s3' => 'E4','s2' => 'A4','s1' => 'D5','tuning' => 'cgdead',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '279','s6' => 'F3','s5' => 'C4','s4' => 'F4','s3' => 'F4','s2' => 'C5','s1' => 'F5','tuning' => 'fcffcf',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '280','s6' => 'E3','s5' => 'B3','s4' => 'E4','s3' => 'B4','s2' => 'D5','s1' => 'E5','tuning' => 'ebebde',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '281','s6' => 'B2','s5' => 'A3','s4' => 'E4','s3' => 'B4','s2' => 'A4','s1' => 'E5','tuning' => 'baebae',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '282','s6' => 'E3','s5' => 'B3','s4' => 'D4#','s3' => 'F4#','s2' => 'B4','s1' => 'E5','tuning' => 'ebd#f#be',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '283','s6' => 'E3','s5' => 'G3#','s4' => 'B3','s3' => 'E4','s2' => 'G4#','s1' => 'B4','tuning' => 'eg#beg#b',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '284','s6' => 'D3','s5' => 'B3','s4' => 'D4','s3' => 'A4','s2' => 'B4','s1' => 'E5','tuning' => 'dbdabe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '285','s6' => 'F3','s5' => 'C4','s4' => 'F4','s3' => 'G4#','s2' => 'C5','s1' => 'F5','tuning' => 'fcfg#cf',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '286','s6' => 'C3','s5' => 'G3','s4' => 'D4','s3' => 'G4','s2' => 'D5','s1' => 'B4','tuning' => 'cgdgdb',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '287','s6' => 'A2','s5' => 'E3','s4' => 'A3','s3' => 'E4','s2' => 'A4','s1' => 'B4','tuning' => 'aeaeab',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '288','s6' => 'C3#','s5' => 'G3#','s4' => 'C4#','s3' => 'G4','s2' => 'B4','s1' => 'E5','tuning' => 'c#g#c#gbe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '289','s6' => 'C3','s5' => 'G3','s4' => 'C4','s3' => 'F4','s2' => 'C5','s1' => 'F5','tuning' => 'cgcfcf',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '290','s6' => 'D3#','s5' => 'G3','s4' => 'A3#','s3' => 'D4#','s2' => 'G4','s1' => 'A4#','tuning' => 'd#ga#d#ga#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '291','s6' => 'C3','s5' => 'G3','s4' => 'C4','s3' => 'F4','s2' => 'B4','s1' => 'C5','tuning' => 'cgcfbc',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '292','s6' => 'C3','s5' => 'A3','s4' => 'E4','s3' => 'G4','s2' => 'C5','s1' => 'E5','tuning' => 'caegce',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '293','s6' => 'C3','s5' => 'F3','s4' => 'G3','s3' => 'A4','s2' => 'C5','s1' => 'D5','tuning' => 'cfgacd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '294','s6' => 'E3','s5' => 'B3','s4' => 'D4','s3' => 'F4#','s2' => 'D5','s1' => 'F5#','tuning' => 'ebdf#df#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '295','s6' => 'E3','s5' => 'B3','s4' => 'E4','s3' => 'B4','s2' => 'E5','s1' => 'F5#','tuning' => 'ebebef#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '296','s6' => 'D3','s5' => 'A3','s4' => 'C4','s3' => 'F4','s2' => 'C5','s1' => 'E5','tuning' => 'dacfce',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '297','s6' => 'C3#','s5' => 'G3#','s4' => 'D4#','s3' => 'G4#','s2' => 'A4#','s1' => 'D5#','tuning' => 'c#g#d#g#a#d#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '298','s6' => 'C3#','s5' => 'F3#','s4' => 'C4#','s3' => 'G4#','s2' => 'G4#','s1' => 'C5#','tuning' => 'c#f#c#g#g#c#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '299','s6' => 'E3','s5' => 'A3','s4' => 'C4#','s3' => 'E4','s2' => 'B4','s1' => 'E5','tuning' => 'eac#ebe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '300','s6' => 'D3','s5' => 'A3','s4' => 'C4','s3' => 'F4','s2' => 'A4','s1' => 'D5','tuning' => 'dacfad',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '301','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'F4#','s2' => 'A4','s1' => 'C5#','tuning' => 'dadf#ac#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '302','s6' => 'E3','s5' => 'A3','s4' => 'G3','s3' => 'F4#','s2' => 'C5','s1' => 'D5','tuning' => 'eagf#cd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '303','s6' => 'D3','s5' => 'G3','s4' => 'E4','s3' => 'A4','s2' => 'C5','s1' => 'E5','tuning' => 'dgeace',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '304','s6' => 'D3','s5' => 'G3','s4' => 'B3','s3' => 'D4','s2' => 'G4','s1' => 'B4','tuning' => 'dgbdgb',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '305','s6' => 'D3#','s5' => 'F3#','s4' => 'B3','s3' => 'F4#','s2' => 'B4','s1' => 'F5','tuning' => 'd#f#bf#bf',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '306','s6' => 'E3','s5' => 'G3','s4' => 'D4','s3' => 'G4','s2' => 'B4','s1' => 'D5','tuning' => 'egdgbd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '307','s6' => 'C3','s5' => 'E3','s4' => 'G3','s3' => 'C4','s2' => 'E4','s1' => 'G5','tuning' => 'cegceg',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '308','s6' => 'C3','s5' => 'E3','s4' => 'G3','s3' => 'B4','s2' => 'C5','s1' => 'E5','tuning' => 'cegbce',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '309','s6' => 'C3','s5' => 'G3','s4' => 'B3','s3' => 'D4','s2' => 'E4','s1' => 'G5','tuning' => 'cgbdeg',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '310','s6' => 'E3','s5' => 'G3','s4' => 'B3','s3' => 'E4','s2' => 'G4','s1' => 'B4','tuning' => 'egbegb',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '311','s6' => 'E3','s5' => 'G3','s4' => 'A3#','s3' => 'D4','s2' => 'E4','s1' => 'G5','tuning' => 'ega#deg',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '312','s6' => 'E3','s5' => 'G3','s4' => 'A3#','s3' => 'E4','s2' => 'G4','s1' => 'A4#','tuning' => 'ega#ega#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '313','s6' => 'E3','s5' => 'G3','s4' => 'A3#','s3' => 'D4','s2' => 'E4','s1' => 'A4','tuning' => 'ega#dea',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '314','s6' => 'E3','s5' => 'G3','s4' => 'B3','s3' => 'D4','s2' => 'F4#','s1' => 'A4','tuning' => 'egbdf#a',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '315','s6' => 'E3','s5' => 'D3','s4' => 'F4#','s3' => 'G4#','s2' => 'C5#','s1' => 'E5','tuning' => 'edf#g#c#e',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '316','s6' => 'E3','s5' => 'D3','s4' => 'F4#','s3' => 'G4#','s2' => 'C5#','s1' => 'B4','tuning' => 'edf#g#c#b',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '317','s6' => 'A2','s5' => 'E3','s4' => 'A3','s3' => 'D4#','s2' => 'F4#','s1' => 'B4','tuning' => 'aead#f#b',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '318','s6' => 'D3','s5' => 'A3','s4' => 'C4','s3' => 'G4','s2' => 'G4','s1' => 'C5','tuning' => 'dacggc',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '319','s6' => 'D3','s5' => 'G3','s4' => 'D4','s3' => 'F4','s2' => 'C5','s1' => 'F5','tuning' => 'dgdfcf',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '320','s6' => 'C3','s5' => 'A3','s4' => 'D4','s3' => 'G4','s2' => 'B4','s1' => 'D5','tuning' => 'cadgbd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '321','s6' => 'B2','s5' => 'F3','s4' => 'B3','s3' => 'D4','s2' => 'B4','s1' => 'E5','tuning' => 'bfbdbe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '322','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'E4','s2' => 'B4','s1' => 'D5','tuning' => 'dadebd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '323','s6' => 'A2','s5' => 'E4','s4' => 'A3','s3' => 'D4','s2' => 'F4#','s1' => 'B4','tuning' => 'aeadf#b',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '324','s6' => 'G3','s5' => 'A3','s4' => 'D4','s3' => 'D5','s2' => 'A4','s1' => 'D5','tuning' => 'gaddad',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '325','s6' => 'F3','s5' => 'C4','s4' => 'F4','s3' => 'C5','s2' => 'C5','s1' => 'F5','tuning' => 'fcfccf',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '326','s6' => 'F3','s5' => 'A3','s4' => 'C4','s3' => 'G4','s2' => 'A4','s1' => 'E5','tuning' => 'facgae',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '327','s6' => 'E3','s5' => 'A3','s4' => 'E4','s3' => 'A4','s2' => 'C5','s1' => 'E5','tuning' => 'eaeace',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '328','s6' => 'D3','s5' => 'A3','s4' => 'C4','s3' => 'A4','s2' => 'G4','s1' => 'D5','tuning' => 'dacagd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '329','s6' => 'F3','s5' => 'F3','s4' => 'C4','s3' => 'C4','s2' => 'C5','s1' => 'C5','tuning' => 'ffcccc',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '330','s6' => 'C3','s5' => 'G3','s4' => 'G3','s3' => 'C4','s2' => 'A4','s1' => 'D5','tuning' => 'cggcad',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '332','s6' => 'B3','s5' => 'E4','s4' => 'D4','s3' => 'G4','s2' => 'B4','s1' => 'E5','tuning' => 'bedgbe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '333','s6' => 'D3','s5' => 'B3','s4' => 'D4','s3' => 'F4#','s2' => 'B4','s1' => 'D5','tuning' => 'dbdf#bd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '334','s6' => 'F3','s5' => 'A3#','s4' => 'D4','s3' => 'F4','s2' => 'C5','s1' => 'F5','tuning' => 'fa#dfcf',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '335','s6' => 'B3','s5' => 'E4','s4' => 'D4','s3' => 'A4','s2' => 'F4#','s1' => 'B4','tuning' => 'bedaf#b',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '336','s6' => 'A2#','s5' => 'G3','s4' => 'C4','s3' => 'F4','s2' => 'A4','s1' => 'D5','tuning' => 'a#gcfad',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '337','s6' => 'G3','s5' => 'D4','s4' => 'A4','s3' => 'D4','s2' => 'F5#','s1' => 'A5','tuning' => 'gdadf#a',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '341','s6' => 'C3','s5' => 'E3','s4' => 'G4','s3' => 'A4','s2' => 'C5','s1' => 'E5','tuning' => 'cegace',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '340','s6' => 'C3','s5' => 'E3','s4' => 'G4','s3' => 'A4','s2' => 'B4','s1' => 'E5','tuning' => 'cegabe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '342','s6' => 'C3#','s5' => 'F3#','s4' => 'C4#','s3' => 'F4#','s2' => 'A4#','s1' => 'C5#','tuning' => 'c#f#c#f#a#c#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '343','s6' => 'F3','s5' => 'A3','s4' => 'C4#','s3' => 'F4','s2' => 'A4','s1' => 'C5#','tuning' => 'fac#fac#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '344','s6' => 'F3','s5' => 'A3','s4' => 'C4','s3' => 'G4','s2' => 'C5','s1' => 'G5','tuning' => 'facgcg',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '345','s6' => 'D3#','s5' => 'G3#','s4' => 'C4#','s3' => 'F4#','s2' => 'F4#','s1' => 'C5#','tuning' => 'd#g#c#f#f#c#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '346','s6' => 'E3','s5' => 'B3','s4' => 'E4','s3' => 'A4','s2' => 'B4','s1' => 'E5','tuning' => 'ebeabe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '347','s6' => 'C3#','s5' => 'A3','s4' => 'D4','s3' => 'A4','s2' => 'B4','s1' => 'C5#','tuning' => 'c#adabc#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '348','s6' => 'C3#','s5' => 'G3#','s4' => 'C4#','s3' => 'F4#','s2' => 'G4#','s1' => 'C5#','tuning' => 'c#g#c#f#g#c#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '349','s6' => 'F3','s5' => 'F3','s4' => 'C4','s3' => 'F4','s2' => 'A4','s1' => 'D5','tuning' => 'ffcfad',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '350','s6' => 'C3','s5' => 'F3','s4' => 'C4','s3' => 'C4','s2' => 'G4','s1' => 'D5','tuning' => 'cfccgd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '351','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'A4','s2' => 'A4','s1' => 'E5','tuning' => 'dadaae',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '352','s6' => 'G3#','s5' => 'C4#','s4' => 'F4#','s3' => 'G4#','s2' => 'D5#','s1' => 'G5#','tuning' => 'g#c#f#g#d#g#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '353','s6' => 'E3','s5' => 'A3','s4' => 'D4','s3' => 'G4','s2' => 'B4','s1' => 'D5','tuning' => 'eadgbd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '354','s6' => 'C3','s5' => 'F3','s4' => 'C4','s3' => 'G4','s2' => 'F5','s1' => 'C5','tuning' => 'cfcgfc',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '355','s6' => 'E3','s5' => 'G3','s4' => 'D4','s3' => 'F4#','s2' => 'B4','s1' => 'F5#','tuning' => 'egdf#bf#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '368','s6' => 'F3#','s5' => 'A3#','s4' => 'D4#','s3' => 'G4#','s2' => 'C5','s1' => 'C5','tuning' => 'f#a#d#g#cc',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '357','s6' => 'A3','s5' => 'D4','s4' => 'G4','s3' => 'C5','s2' => 'E5','s1' => 'A5','tuning' => 'adgcea',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '358','s6' => 'D3','s5' => 'C4','s4' => 'F4','s3' => 'G4','s2' => 'C5','s1' => 'E5','tuning' => 'dcfgce',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '359','s6' => 'A2','s5' => 'D3','s4' => 'C4','s3' => 'F4','s2' => 'A4','s1' => 'D5','tuning' => 'adcfad',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '360','s6' => 'D3#','s5' => 'A3#','s4' => 'F4#','s3' => 'B4','s2' => 'G4#','s1' => 'E5','tuning' => 'd#a#f#bg#e',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '361','s6' => 'E3','s5' => 'G3','s4' => 'B3','s3' => 'F4','s2' => 'G4','s1' => 'B4','tuning' => 'egbfgb',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '362','s6' => 'F3#','s5' => 'C4#','s4' => 'F4#','s3' => 'A4#','s2' => 'C5#','s1' => 'F5#','tuning' => 'f#c#f#a#c#f#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '363','s6' => 'C3','s5' => 'E3','s4' => 'G3','s3' => 'D4','s2' => 'G4','s1' => 'B4','tuning' => 'cegdgb',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '364','s6' => 'C3','s5' => 'A3','s4' => 'E4','s3' => 'A4','s2' => 'C5#','s1' => 'E5','tuning' => 'caeac#e',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '365','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'A4','s2' => 'D5','s1' => 'F5#','tuning' => 'dadadf#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '366','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'F4#','s2' => 'B4','s1' => 'A5','tuning' => 'dadf#ba',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '367','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'F4#','s2' => 'A4','s1' => 'B4','tuning' => 'dadf#ab',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '369','s6' => 'F3','s5' => 'A3','s4' => 'D4','s3' => 'G4','s2' => 'C5','s1' => 'F5','tuning' => 'fadgcf',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '370','s6' => 'E3','s5' => 'A3','s4' => 'E4','s3' => 'E4','s2' => 'B4','s1' => 'E5','tuning' => 'eaeebe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '371','s6' => 'D3','s5' => 'G3','s4' => 'D4','s3' => 'F4','s2' => 'A4','s1' => 'C5','tuning' => 'dgdfac',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '372','s6' => 'D3','s5' => 'G3','s4' => 'D4','s3' => 'F4#','s2' => 'A4','s1' => 'C5','tuning' => 'dgdf#ac',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '373','s6' => 'D3','s5' => 'G3','s4' => 'D4','s3' => 'F4#','s2' => 'A4','s1' => 'C5#','tuning' => 'dgdf#ac#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '374','s6' => 'C3','s5' => 'F3','s4' => 'C4','s3' => 'F4','s2' => 'G4','s1' => 'C5','tuning' => 'cfcfgc',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '375','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'A4','s2' => 'C5#','s1' => 'D5','tuning' => 'dadac#d',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '376','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'F4','s2' => 'A4','s1' => 'E5','tuning' => 'dadfae',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '377','s6' => 'D3','s5' => 'A3','s4' => 'F4#','s3' => 'G4','s2' => 'A4','s1' => 'D5','tuning' => 'daf#gad',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '378','s6' => 'C3','s5' => 'F3','s4' => 'C4','s3' => 'G4','s2' => 'G4','s1' => 'C5','tuning' => 'cfcggc',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '379','s6' => 'E3','s5' => 'G3#','s4' => 'B3','s3' => 'E4','s2' => 'B4','s1' => 'C5#','tuning' => 'eg#bebc#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '380','s6' => 'C3','s5' => 'F3','s4' => 'F4','s3' => 'A4#','s2' => 'F5','s1' => 'C5','tuning' => 'cffa#fc',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '381','s6' => 'C3','s5' => 'F3','s4' => 'A3#','s3' => 'F4','s2' => 'F4','s1' => 'C5','tuning' => 'cfa#ffc',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '382','s6' => 'D3#','s5' => 'G3','s4' => 'D4','s3' => 'G4','s2' => 'A4#','s1' => 'D5','tuning' => 'd#gdga#d',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '383','s6' => 'E3','s5' => 'F3#','s4' => 'B3','s3' => 'E4','s2' => 'G4#','s1' => 'E5','tuning' => 'ef#beg#e',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '384','s6' => 'E3','s5' => 'B3','s4' => 'E4','s3' => 'A4#','s2' => 'B4','s1' => 'E5','tuning' => 'ebea#be',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '385','s6' => 'C3','s5' => 'G3','s4' => 'C4','s3' => 'E4','s2' => 'G4','s1' => 'D5','tuning' => 'cgcegd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '386','s6' => 'G3','s5' => 'G3','s4' => 'D4','s3' => 'G4','s2' => 'G4','s1' => 'D5','tuning' => 'ggdggd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '387','s6' => 'C3','s5' => 'G3','s4' => 'E4','s3' => 'G4','s2' => 'B4','s1' => 'D5','tuning' => 'cgegbd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '388','s6' => 'D3','s5' => 'G3','s4' => 'D4','s3' => 'F4','s2' => 'A4','s1' => 'A4','tuning' => 'dgdfaa',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '389','s6' => 'C3#','s5' => 'G3#','s4' => 'D4#','s3' => 'F4#','s2' => 'B4','s1' => 'D5#','tuning' => 'c#g#d#f#bd#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '390','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'D4','s2' => 'A4','s1' => 'E5','tuning' => 'daddae',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '391','s6' => 'G3#','s5' => 'G3','s4' => 'C4','s3' => 'F4','s2' => 'A4#','s1' => 'C5','tuning' => 'g#gcfa#c',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '392','s6' => 'E3','s5' => 'A3','s4' => 'C4#','s3' => 'G4#','s2' => 'B4','s1' => 'E5','tuning' => 'eac#g#be',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '393','s6' => 'E3','s5' => 'A3','s4' => 'C4#','s3' => 'G4#','s2' => 'B4','s1' => 'D5','tuning' => 'eac#g#bd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '394','s6' => 'E3','s5' => 'A3','s4' => 'C4#','s3' => 'G4#','s2' => 'B4','s1' => 'D5#','tuning' => 'eac#g#bd#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '395','s6' => 'D3','s5' => 'B3','s4' => 'C4#','s3' => 'F4#','s2' => 'A4','s1' => 'E5','tuning' => 'dbc#f#ae',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '396','s6' => 'A2','s5' => 'E3','s4' => 'C4','s3' => 'E4','s2' => 'G4','s1' => 'C5','tuning' => 'aecegc',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '397','s6' => 'C3#','s5' => 'G3#','s4' => 'C4#','s3' => 'G4#','s2' => 'C5#','s1' => 'E5','tuning' => 'c#g#c#g#c#e',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '398','s6' => 'F3','s5' => 'A3#','s4' => 'C4','s3' => 'F4','s2' => 'A4','s1' => 'C5','tuning' => 'fa#cfac',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '399','s6' => 'D3#','s5' => 'A3#','s4' => 'D4#','s3' => 'G4','s2' => 'C5','s1' => 'F5','tuning' => 'd#a#d#gcf',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '400','s6' => 'F3','s5' => 'A3','s4' => 'G3','s3' => 'F4','s2' => 'A4','s1' => 'G5','tuning' => 'fagfag',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '401','s6' => 'G3','s5' => 'C4','s4' => 'F4#','s3' => 'F4#','s2' => 'C5','s1' => 'E5','tuning' => 'gcf#f#ce',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '402','s6' => 'F3','s5' => 'G3','s4' => 'C4','s3' => 'A4','s2' => 'C5','s1' => 'E5','tuning' => 'fgcace',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '403','s6' => 'F3','s5' => 'G3','s4' => 'C4','s3' => 'A4','s2' => 'C5','s1' => 'F5','tuning' => 'fgcacf',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '404','s6' => 'F3','s5' => 'G3','s4' => 'C4','s3' => 'B4','s2' => 'C5','s1' => 'F5','tuning' => 'fgcbcf',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '405','s6' => 'F3','s5' => 'G3','s4' => 'A3','s3' => 'E4','s2' => 'C5','s1' => 'F5','tuning' => 'fgaecf',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '406','s6' => 'F3','s5' => 'G3','s4' => 'A3','s3' => 'E4','s2' => 'C5','s1' => 'D5#','tuning' => 'fgaecd#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '407','s6' => 'F3','s5' => 'G3','s4' => 'A3','s3' => 'E4','s2' => 'C5','s1' => 'E5','tuning' => 'fgaece',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '408','s6' => 'B2','s5' => 'E3','s4' => 'A3','s3' => 'E4','s2' => 'A4','s1' => 'C5','tuning' => 'beaeac',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '409','s6' => 'B2','s5' => 'E3','s4' => 'A3','s3' => 'E4','s2' => 'A4','s1' => 'D5','tuning' => 'beaead',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '410','s6' => 'B2','s5' => 'E3','s4' => 'B3','s3' => 'E4','s2' => 'F4#','s1' => 'B4','tuning' => 'bebef#b',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '411','s6' => 'B2','s5' => 'E3','s4' => 'A3','s3' => 'E4','s2' => 'A4','s1' => 'C5#','tuning' => 'beaeac#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '412','s6' => 'B2','s5' => 'G3','s4' => 'B3','s3' => 'D4','s2' => 'B4','s1' => 'E5','tuning' => 'bgbdbe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '413','s6' => 'C3','s5' => 'F3','s4' => 'G3','s3' => 'D4','s2' => 'A4','s1' => 'D5','tuning' => 'cfgdad',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '414','s6' => 'C3','s5' => 'G3','s4' => 'C4','s3' => 'E4','s2' => 'G4','s1' => 'B4','tuning' => 'cgcegb',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '415','s6' => 'B2','s5' => 'A3','s4' => 'C4','s3' => 'F4#','s2' => 'C5','s1' => 'E5','tuning' => 'bacf#ce',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '416','s6' => 'E3','s5' => 'G3','s4' => 'D4','s3' => 'F4#','s2' => 'A4','s1' => 'D5','tuning' => 'egdf#ad',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '417','s6' => 'G3','s5' => 'D3','s4' => 'A3','s3' => 'D4','s2' => 'G4','s1' => 'B4','tuning' => 'gdadgb',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '418','s6' => 'E3','s5' => 'A3','s4' => 'D4','s3' => 'F4#','s2' => 'A4','s1' => 'E5','tuning' => 'eadf#ae',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '419','s6' => 'G3','s5' => 'G3','s4' => 'D4','s3' => 'D4','s2' => 'D5#','s1' => 'D5#','tuning' => 'ggddd#d#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '420','s6' => 'D3','s5' => 'A3','s4' => 'G4','s3' => 'C4','s2' => 'C5','s1' => 'G5','tuning' => 'dagccg',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '421','s6' => 'A2','s5' => 'E3','s4' => 'A3#','s3' => 'E4','s2' => 'B4','s1' => 'E5','tuning' => 'aea#ebe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '422','s6' => 'A2','s5' => 'E3','s4' => 'A3','s3' => 'E4','s2' => 'B4','s1' => 'E5','tuning' => 'aeaebe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '423','s6' => 'D3','s5' => 'G3','s4' => 'D4','s3' => 'F4#','s2' => 'A4#','s1' => 'D5#','tuning' => 'dgdf#a#d#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '424','s6' => 'C3#','s5' => 'G3#','s4' => 'E4','s3' => 'A4','s2' => 'C5','s1' => 'F5','tuning' => 'c#g#eacf',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '425','s6' => 'D3','s5' => 'A3','s4' => 'E4','s3' => 'A4','s2' => 'B4','s1' => 'D5','tuning' => 'daeabd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '426','s6' => 'C3#','s5' => 'G3#','s4' => 'D4#','s3' => 'G4#','s2' => 'C5','s1' => 'C5#','tuning' => 'c#g#d#g#cc#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '427','s6' => 'F3','s5' => 'A3','s4' => 'G3','s3' => 'D4','s2' => 'A4','s1' => 'D5','tuning' => 'fagdad',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '428','s6' => 'D3#','s5' => 'A3#','s4' => 'D4#','s3' => 'G4#','s2' => 'C5','s1' => 'F5','tuning' => 'd#a#d#g#cf',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '429','s6' => 'D3','s5' => 'B3','s4' => 'C4#','s3' => 'F4#','s2' => 'A4','s1' => 'C5#','tuning' => 'dbc#f#ac#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '430','s6' => 'E3','s5' => 'A3','s4' => 'D4','s3' => 'G4','s2' => 'A4','s1' => 'D5','tuning' => 'eadgad',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '431','s6' => 'D3#','s5' => 'G3#','s4' => 'D4#','s3' => 'F4#','s2' => 'A4#','s1' => 'D5#','tuning' => 'd#g#d#f#a#d#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '432','s6' => 'F3','s5' => 'A3#','s4' => 'C4','s3' => 'F4','s2' => 'A4','s1' => 'E5','tuning' => 'fa#cfae',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '433','s6' => 'F3','s5' => 'A3','s4' => 'C4','s3' => 'F4','s2' => 'C5','s1' => 'F5','tuning' => 'facfcf',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '434','s6' => 'G3','s5' => 'C4','s4' => 'E4','s3' => 'G4','s2' => 'C5','s1' => 'C5','tuning' => 'gcegcc',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '435','s6' => 'D3#','s5' => 'A3#','s4' => 'C4','s3' => 'F4','s2' => 'A4#','s1' => 'D5','tuning' => 'd#a#cfa#d',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '436','s6' => 'F3','s5' => 'A3','s4' => 'C4','s3' => 'G4','s2' => 'A4','s1' => 'C5','tuning' => 'facgac',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '437','s6' => 'F3','s5' => 'F3','s4' => 'C4','s3' => 'G4','s2' => 'C5','s1' => 'F5','tuning' => 'ffcgcf',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '438','s6' => 'E3','s5' => 'B3','s4' => 'C4#','s3' => 'F4#','s2' => 'B4','s1' => 'F5#','tuning' => 'ebc#f#bf#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '439','s6' => 'E3','s5' => 'G3','s4' => 'C4','s3' => 'G4','s2' => 'C5','s1' => 'E5','tuning' => 'egcgce',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '440','s6' => 'E3','s5' => 'A3','s4' => 'B3','s3' => 'D4#','s2' => 'B4','s1' => 'E5','tuning' => 'eabd#be',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '441','s6' => 'C3','s5' => 'E4','s4' => 'B3','s3' => 'E4','s2' => 'B4','s1' => 'E5','tuning' => 'cebebe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '442','s6' => 'F3','s5' => 'A3','s4' => 'D4','s3' => 'A4','s2' => 'C5','s1' => 'E5','tuning' => 'fadace',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '443','s6' => 'D3#','s5' => 'C4','s4' => 'A3#','s3' => 'D4#','s2' => 'C5','s1' => 'D5#','tuning' => 'd#ca#d#cd#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '444','s6' => 'D3#','s5' => 'C4','s4' => 'D4#','s3' => 'G4#','s2' => 'C5','s1' => 'D5#','tuning' => 'd#cd#g#cd#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '445','s6' => 'C3#','s5' => 'G3#','s4' => 'C4#','s3' => 'D4#','s2' => 'G4#','s1' => 'D5#','tuning' => 'c#g#c#d#g#d#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '446','s6' => 'C3','s5' => 'G3','s4' => 'C4','s3' => 'G4','s2' => 'C5','s1' => 'F5','tuning' => 'cgcgcf',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '447','s6' => 'C3','s5' => 'G3','s4' => 'D4','s3' => 'G4','s2' => 'A4','s1' => 'C5','tuning' => 'cgdgac',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '448','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'E4','s2' => 'A4','s1' => 'B4','tuning' => 'dadeab',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '449','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'F4','s2' => 'A4','s1' => 'C5','tuning' => 'dadfac',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '450','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'C4#','s2' => 'B4','s1' => 'C5#','tuning' => 'dadc#bc#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '451','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'C4#','s2' => 'A4','s1' => 'C5#','tuning' => 'dadc#ac#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '452','s6' => 'D3','s5' => 'G3','s4' => 'D4','s3' => 'G4','s2' => 'C5','s1' => 'F5','tuning' => 'dgdgcf',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '453','s6' => 'E3','s5' => 'B3','s4' => 'E4','s3' => 'F4#','s2' => 'B4','s1' => 'E5','tuning' => 'ebef#be',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '454','s6' => 'F3','s5' => 'G3','s4' => 'D4','s3' => 'G4','s2' => 'C5','s1' => 'D5','tuning' => 'fgdgcd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '455','s6' => 'F3','s5' => 'A3#','s4' => 'C4','s3' => 'G4','s2' => 'C5','s1' => 'F5','tuning' => 'fa#cgcf',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '456','s6' => 'F3#','s5' => 'A3','s4' => 'C4#','s3' => 'F4#','s2' => 'A4','s1' => 'C5#','tuning' => 'f#ac#f#ac#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '457','s6' => 'G3','s5' => 'B3','s4' => 'D4','s3' => 'G4','s2' => 'B4','s1' => 'E5','tuning' => 'gbdgbe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '458','s6' => 'E3','s5' => 'G3#','s4' => 'C4#','s3' => 'F4#','s2' => 'B4','s1' => 'E5','tuning' => 'eg#c#f#be',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '459','s6' => 'E3','s5' => 'A3','s4' => 'E4','s3' => 'G4','s2' => 'B4','s1' => 'E5','tuning' => 'eaegbe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '460','s6' => 'E3','s5' => 'B3','s4' => 'B3','s3' => 'F4#','s2' => 'B4','s1' => 'E5','tuning' => 'ebbf#be',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '461','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'G4','s2' => 'A4#','s1' => 'E5','tuning' => 'dadga#e',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '462','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'G4','s2' => 'C5','s1' => 'E5','tuning' => 'dadgce',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '463','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'G4','s2' => 'C5','s1' => 'D5#','tuning' => 'dadgcd#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '464','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'G4','s2' => 'C5','s1' => 'D5','tuning' => 'dadgcd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '465','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'G4','s2' => 'C5','s1' => 'C5','tuning' => 'dadgcc',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '466','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'G4','s2' => 'B4','s1' => 'B4','tuning' => 'dadgbb',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '467','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'G4','s2' => 'A4','s1' => 'C5','tuning' => 'dadgac',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '468','s6' => 'D3','s5' => 'A3','s4' => 'E4','s3' => 'G4','s2' => 'B4','s1' => 'E5','tuning' => 'daegbe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '469','s6' => 'A2#','s5' => 'F3','s4' => 'C4','s3' => 'G4','s2' => 'A4','s1' => 'D5','tuning' => 'a#fcgad',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '470','s6' => 'D3','s5' => 'A3','s4' => 'E4','s3' => 'G4','s2' => 'A4','s1' => 'D5','tuning' => 'daegad',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '471','s6' => 'D3','s5' => 'D3','s4' => 'D4','s3' => 'D4','s2' => 'A4','s1' => 'D5','tuning' => 'ddddad',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '472','s6' => 'D3','s5' => 'A3','s4' => 'C4','s3' => 'F4#','s2' => 'A4','s1' => 'D5','tuning' => 'dacf#ad',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '473','s6' => 'D3','s5' => 'G3','s4' => 'D4','s3' => 'G4','s2' => 'A4#','s1' => 'C5','tuning' => 'dgdga#c',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '474','s6' => 'E3','s5' => 'A3','s4' => 'C4#','s3' => 'G4','s2' => 'B4','s1' => 'E5','tuning' => 'eac#gbe',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '475','s6' => 'E3','s5' => 'A3','s4' => 'D4','s3' => 'G4','s2' => 'B4','s1' => 'C5','tuning' => 'eadgbc',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '476','s6' => 'D3','s5' => 'G3','s4' => 'D4','s3' => 'G4','s2' => 'A4','s1' => 'E5','tuning' => 'dgdgae',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '477','s6' => 'E3','s5' => 'C4','s4' => 'G3','s3' => 'F4','s2' => 'G4','s1' => 'C5','tuning' => 'ecgfgc',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '478','s6' => 'C3','s5' => 'G3','s4' => 'F4','s3' => 'G4','s2' => 'C5','s1' => 'E5','tuning' => 'cgfgce',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '479','s6' => 'C3','s5' => 'G3','s4' => 'B3','s3' => 'F4','s2' => 'G4','s1' => 'B5','tuning' => 'cgbfgb',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '480','s6' => 'D3','s5' => 'A3','s4' => 'D4','s3' => 'F4#','s2' => 'A4','s1' => 'E5','tuning' => 'dadf#ae',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '481','s6' => 'D3','s5' => 'B3','s4' => 'D4','s3' => 'F4#','s2' => 'A4','s1' => 'E5','tuning' => 'dbdf#ae',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '482','s6' => 'G3','s5' => 'B3','s4' => 'D4','s3' => 'A4','s2' => 'D5','s1' => 'F5#','tuning' => 'gbdadf#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '483','s6' => 'C3#','s5' => 'G3#','s4' => 'C4#','s3' => 'F4','s2' => 'G4#','s1' => 'D5#','tuning' => 'c#g#c#fg#d#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '484','s6' => 'C3','s5' => 'A3','s4' => 'E4','s3' => 'G4','s2' => 'B4','s1' => 'D5','tuning' => 'caegbd',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '485','s6' => 'E3','s5' => 'A3','s4' => 'B3','s3' => 'F4#','s2' => 'B4','s1' => 'F5#','tuning' => 'eabf#bf#',));
+  $rows_affected = $wpdb->insert($table_name,  array('id' => '486','s6' => 'A2','s5' => 'D3','s4' => 'A3','s3' => 'G4','s2' => 'B4','s1' => 'E5','tuning' => 'adagbe',));
+
+
+
+
+        add_option("jal_db_version", $jal_db_version);
+    }
+}
+
+register_activation_hook(__FILE__, 'jal_install');
+
+//define plugin defaults
+DEFINE("DEMOLP_LISTSTART", "Start the Bugger");
+DEFINE("DEMOLP_LISTSTART2", " ");
+DEFINE("DEMOLP_LISTEND", "End the Bugger");
+
+//tell wordpress to register the demolistposts shortcode
+add_shortcode("gtdb", "demolistposts_handler");
+
+function demolistposts_handler($incomingfrompost) {
+    //process incoming attributes assigning defaults if required
+    $incomingfrompost = shortcode_atts(array(
+        "liststart" => DEMOLP_LISTSTART,
+        "tuner" => DEMOLP_LISTSTART2,
+        "listend" => DEMOLP_LISTEND,
+            ), $incomingfrompost);
+//print_r($incomingfrompost); exit;
+    //run function that actually does the work of the plugin
+    $demolph_output = demolistposts_function($incomingfrompost);
+    //print_r($demolph_output); exit;
+    //send back text to replace shortcode in post
+    //echo $incomingfrompost["listend"]; exit;
+    return $demolph_output;
+}
+
+//use wp_specialchars_decode so html is treated as html and not text
+//use wp_specialchars when outputting text to ensure it is valid html
+function demolistposts_function($incomingfromhandler) {
+    //add list start["liststart"]);
+    global $wpdb;
+$counterIds = 1;
+    $results = $wpdb->get_results('SELECT * FROM wp_guitar_tuners WHERE tuning = "'.$incomingfromhandler["tuner"].'"', OBJECT);
+    //print_r($results); exit;
+            $counterSounds = 6;
+    foreach ($results as $result) {
+        $sound6 = '<link href="/wp-content/plugins/guitar-tuner/style.css" rel="stylesheet" type="text/css" media="all"/><audio id="sound1" loop><source src="/wp-content/plugins/guitar-tuner/sounds/'.str_replace('#', 's', $result->s6).'.mp3" type="audio/mp3" /></audio>';
+        $sound5 = '<audio id="sound2" loop><source src="/wp-content/plugins/guitar-tuner/sounds/'.str_replace('#', 's', $result->s5).'.mp3" type="audio/mp3" /></audio>';
+        $sound4 = '<audio id="sound3" loop><source src="/wp-content/plugins/guitar-tuner/sounds/'.str_replace('#', 's', $result->s4).'.mp3" type="audio/mp3" /></audio>';
+        $sound3 = '<audio id="sound4" loop><source src="/wp-content/plugins/guitar-tuner/sounds/'.str_replace('#', 's', $result->s3).'.mp3" type="audio/mp3" /></audio>';
+        $sound2 = '<audio id="sound5" loop><source src="/wp-content/plugins/guitar-tuner/sounds/'.str_replace('#', 's', $result->s2).'.mp3" type="audio/mp3" /></audio>';
+        $sound1 = '<audio id="sound6" loop><source src="/wp-content/plugins/guitar-tuner/sounds/'.str_replace('#', 's', $result->s1).'.mp3" type="audio/mp3" /></audio>';
+        $button6 = '<div class="col-xs-2"><div class="play main_tuner_button" id="btn1">'.preg_replace("/[0-9]+/", "", $result->s6).'</div></div>';
+        $button5 = '<div class="col-xs-2"><div class="play main_tuner_button" id="btn2">'.preg_replace("/[0-9]+/", "", $result->s5).'</div></div>';
+        $button4 = '<div class="col-xs-2"><div class="play main_tuner_button" id="btn3">'.preg_replace("/[0-9]+/", "", $result->s4).'</div></div>';
+        $button3 = '<div class="col-xs-2"><div class="play main_tuner_button" id="btn4">'.preg_replace("/[0-9]+/", "", $result->s3).'</div></div>';
+        $button2 = '<div class="col-xs-2"><div class="play main_tuner_button" id="btn5">'.preg_replace("/[0-9]+/", "", $result->s2).'</div></div>';
+        $button1 = '<div class="col-xs-2"><div class="play main_tuner_button" id="btn6">'.preg_replace("/[0-9]+/", "", $result->s1).'</div></div>';
+    }
+    //echo $sound1; exit;
+    $demolp_output = $sound6.$sound5.$sound4.$sound3.$sound2.$sound1;
+    $demolp_output .= $button6.$button5.$button4.$button3.$button2.$button1;
+    $counterIds++;
+    //send back text to calling function
+    return $demolp_output;
+}
+
+function myplugin_deactivate() {
+    global $wpdb;
+    $wpdb->query("DROP TABLE  wp_guitar_tuners;");
+}
+
+//This will call the myplugin_deactivate() function on deactivation of the plugin.
+register_deactivation_hook(__FILE__, 'myplugin_deactivate');
+
+
+
+function myscript() {
+?>
+<script   src="https://code.jquery.com/jquery-2.2.3.min.js"   integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="   crossorigin="anonymous"></script>
+<script type="text/javascript">
+    var $ = jQuery.noConflict();
+    // Make buttons stop audio and go to zero on click
+    $('.play').click(function() {
+        var $this = $(this);
+        var id = $this.attr('id').replace(/btn/, '');
+        $this.toggleClass('active');
+        if ($this.hasClass('active')) {
+            //$this.text('stop'); 
+            $('audio[id^="sound"]')[id - 1].play();
+        } else {
+            //$this.text('play');
+            $('audio[id^="sound"]')[id - 1].pause();
+            $('audio[id^="sound"]')[id - 1].currentTime = 0;
+        }
+    });
+</script>
+<?php
+
+}
+add_action( 'wp_footer', 'myscript' );
+
+function myscript_jquery() {
+    wp_enqueue_script( 'jquery' );
+}
+add_action( 'wp_head' , 'myscript_jquery' );
